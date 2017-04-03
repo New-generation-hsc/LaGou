@@ -47,7 +47,6 @@ class LG(object):
             else:
                 position_dict = self._parse_postion_link()
             self._positions = position_dict
-            # print(self._positions)
         return self._positions
 
     def _parse_postion_link(self):
@@ -63,7 +62,6 @@ class LG(object):
             if name and link:
                 instance = Job(position=name, url=link)
                 instance.save()
-                print(name, link)
         return position_dict
 
 
@@ -88,7 +86,6 @@ class Recruit(LG):
                 link = item(".position_link").attr("href")
                 # title = item("h2").text()
                 self.link_queue.put(link)
-                print(link)
         except KeyError:
             logger.error("NO such job")
 
@@ -106,7 +103,6 @@ class Recruit(LG):
         job = Job.objects.filter(position__iexact=self.keyword).first()
         information.job = job
         information.save()
-        print(salary, location, expreience, degree)
 
         description = query("#job_detail > dd.job_bt > div")
         logger.info("正在爬取第...个职位描述")
@@ -147,7 +143,6 @@ class Recruit(LG):
             job = Job.objects.filter(position__iexact=self.keyword).first()
             skill_instance.job = job
             skill_instance.save()
-        print(skill_count)
 
 
 def generate_word_cloud(frequencies):
